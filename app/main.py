@@ -1,17 +1,9 @@
-import asyncio
+"""fast API entri point."""
 
-import telegram
+from fastapi import FastAPI
 
-from app.config import get_settings
+from app.exception import register_exception_handlers
 
-settings = get_settings()
+app = FastAPI()
 
-
-async def main():
-    bot = telegram.Bot(settings.bot_token)
-    async with bot:
-        print(await bot.get_me())
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+register_exception_handlers(app)

@@ -11,6 +11,7 @@ DEFAULT_ENV_FILE = BASE_DIR / ".env"
 
 class Settings(BaseSettings):
     bot_token: str
+    channel_name: str
 
     model_config = SettingsConfigDict(
         env_file=DEFAULT_ENV_FILE,
