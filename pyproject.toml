@@ -5,10 +5,13 @@ description = "project streamlit untuk tool kits di server pulsa."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "aiosqlite>=0.21.0",
+    "alembic>=1.16.5",
     "fastapi[standard]>=0.116.1",
     "loguru>=0.7.3",
     "pydantic-settings>=2.10.1",
     "python-telegram-bot[all]>=22.3",
+    "sqlalchemy>=2.0.43",
 ]
 
 
