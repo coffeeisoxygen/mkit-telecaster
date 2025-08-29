@@ -3,6 +3,9 @@ from pathlib import Path
 
 import pytest
 from app.config import get_settings
+from app.database import create_tables, sessionmanager
+from app.exception import register_exception_handlers
+from app.main import FastAPI
 from app.utils.mlogging import InterceptHandler
 from loguru import logger
 
@@ -38,3 +41,23 @@ def intercept_loguru(caplog: pytest.LogCaptureFixture):
     )
     yield
     logger.remove(handler_id)
+
+
+@pytest.fixture(scope="session", autouse=True)
+async def setup_database():
+    """Create all tables before running tests."""
+    await create_tables(sessionmanager.engine)
+
+
+@pytest.fixture(scope="function")
+async def db_session():
+    """Yield an async database session for tests."""
+    async with sessionmanager.session() as session:
+        yield session
+
+
+@pytest.fixture
+def app_with_exception():
+    app = FastAPI()
+    register_exception_handlers(app)
+    return app
