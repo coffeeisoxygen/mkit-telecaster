@@ -5,14 +5,13 @@ from pathlib import Path
 from loguru import logger
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from app.config.cfg_values import ConfigBotTelegram, ConfigEnvironment
+from app.config.cfg_values import ConfigEnvironment
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DEFAULT_ENV_FILE = BASE_DIR / ".env"
 
 
 class Settings(BaseSettings):
-    TELE: ConfigBotTelegram
     APP: ConfigEnvironment
 
     model_config = SettingsConfigDict(
@@ -20,6 +19,7 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
         case_sensitive=False,
+        env_nested_delimiter="__",
     )
 
 
