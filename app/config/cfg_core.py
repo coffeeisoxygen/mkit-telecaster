@@ -5,7 +5,7 @@ from pathlib import Path
 from loguru import logger
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from app.config.cfg_values import ConfigEnvironment
+from app.config.cfg_values import ConfigDatabase, ConfigEnvironment
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DEFAULT_ENV_FILE = BASE_DIR / ".env"
@@ -13,7 +13,7 @@ DEFAULT_ENV_FILE = BASE_DIR / ".env"
 
 class Settings(BaseSettings):
     APP: ConfigEnvironment
-
+    DB: ConfigDatabase
     model_config = SettingsConfigDict(
         env_file=DEFAULT_ENV_FILE,
         env_file_encoding="utf-8",

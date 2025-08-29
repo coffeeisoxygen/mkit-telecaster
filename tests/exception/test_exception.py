@@ -1,4 +1,4 @@
-from app.exception.base_exc import AppExceptionError
+from app.exception import AppExceptionError
 
 
 def test_default_initialization():
