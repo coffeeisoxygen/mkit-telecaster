@@ -25,8 +25,8 @@ sessionmanager = DatabaseSessionManager(settings.DB.url)
 async def lifespan(app):  # noqa: ANN001, ARG001, D103
     logger.info("Application starting up.")
     yield
-    logger.info("Application shutting down.")
     await sessionmanager.close()
+    logger.info("Database connection closed, the App is Shutting Down")
 
 
 app = FastAPI(
