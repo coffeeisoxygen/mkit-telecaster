@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import Base
 from app.models.hlp_mixin import SoftDeleteMixin, TimestampMixin
@@ -22,5 +22,3 @@ class User(Base, TimestampMixin, SoftDeleteMixin):
     is_active: Mapped[bool] = mapped_column(
         Boolean, default=True, onupdate=False, index=True
     )
-
-    sessions = relationship("Session", back_populates="user")

@@ -10,6 +10,7 @@ from app.database.core.session import (
     get_db_session_manual_commit,
 )
 from app.exception import InternalServiceError
+from app.models import User
 from sqlalchemy import delete
 
 
