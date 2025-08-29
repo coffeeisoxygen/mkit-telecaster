@@ -12,8 +12,8 @@ DEFAULT_ENV_FILE = BASE_DIR / ".env"
 
 
 class Settings(BaseSettings):
-    bot: ConfigBotTelegram
-    env: ConfigEnvironment
+    TELE: ConfigBotTelegram
+    APP: ConfigEnvironment
 
     model_config = SettingsConfigDict(
         env_file=DEFAULT_ENV_FILE,

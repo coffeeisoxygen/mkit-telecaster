@@ -20,7 +20,7 @@ def test_settings():
     get_settings.cache_clear()
     test_env = Path(__file__).parent.parent / ".env.test"
     settings = get_settings(test_env)
-    print(f" running on env {settings.env.environment}")
+    print(f" running on env {settings.APP.environment}")
     return settings
 
 

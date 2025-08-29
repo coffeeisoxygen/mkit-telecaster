@@ -10,4 +10,4 @@ class ConfigEnvironment(BaseSettings):
 
 class ConfigBotTelegram(BaseSettings):
     token: str
-    chat_id: str
+    chatid: str
