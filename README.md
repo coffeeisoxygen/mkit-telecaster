@@ -26,16 +26,8 @@ produk ini open source , silahkan di gunakan, developer tidak bertanggung atas h
 
 ## todo
 
-1- Buat Bot Telegram
+1- Buat Bot Telegram di [botfather] (<https://core.telegram.org/bots#botfather>)
+2- Simpan Token
 2- Jadikan Bot sebagai Admin di Channel Telegram
-Kalau channel public → cukup @nama_channel.
-
-Kalau channel private → harus numeric chat_id.
-
-Cara dapetnya:
-
-Tambahin bot jadi admin channel.
-
-Kirim 1 pesan di channel.
-
-Panggil API getUpdates atau cek log update bot → nanti keliatan chat.id (biasanya minus, contoh: -1001234567890).
+3- check tipe channel Public/Private
+4- kirim pesan di channel oleh akun pribadi

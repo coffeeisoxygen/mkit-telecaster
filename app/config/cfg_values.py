@@ -31,19 +31,21 @@ class ConfigEnvironment(BaseSettings):
 class ConfigDatabase(BaseSettings):
     """Konfigurasi database untuk aplikasi."""
 
-    url: str = "sqlite+aiosqlite:///./mkitparser.db"
+    url: str = "sqlite+aiosqlite:///./telecaster.db"
     echo: bool = Field(
-        False, description="Aktifkan logging SQL. Nonaktifkan untuk produksi."
+        default=False, description="Aktifkan logging SQL. Nonaktifkan untuk produksi."
     )
 
     timeout: int = Field(5, description="Waktu tunggu (detik) untuk koneksi database.")
 
     pool_size: int = Field(5, description="Jumlah koneksi yang disimpan dalam pool.")
     max_overflow: int = Field(
-        10, description="Jumlah koneksi tambahan yang diizinkan saat pool penuh."
+        default=10,
+        description="Jumlah koneksi tambahan yang diizinkan saat pool penuh.",
     )
 
 
 class ConfigBotTelegram(BaseSettings):
-    token: str
-    chatid: str
+    channel_type: str
+    channel_name: str
+    channel_chat_id: str
