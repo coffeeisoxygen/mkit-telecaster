@@ -22,7 +22,7 @@ sessionmanager = DatabaseSessionManager(settings.DB.url)
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app):  # noqa: ANN001, ARG001, D103
     logger.info("Application starting up.")
     yield
     logger.info("Application shutting down.")
@@ -33,7 +33,7 @@ app = FastAPI(
     title=settings.APP.name,
     version=settings.APP.version,
     debug=settings.APP.debug,
-    description="aplikasi untuk helper parsing reply addon json yang panjang panjang",
+    description="Bot Broadcaster Untuk Otomax.",
     lifespan=lifespan,
 )
 
