@@ -54,6 +54,7 @@ temp/sample/
 *.sqlite
 *.dbml
 *.env
+*.test
 user_info.json
 
 # Miscellaneous

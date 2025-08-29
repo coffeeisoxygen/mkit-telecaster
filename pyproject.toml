@@ -9,6 +9,7 @@ dependencies = [
     "alembic>=1.16.5",
     "fastapi[standard]>=0.116.1",
     "loguru>=0.7.3",
+    "loguru-config>=0.1.0",
     "pydantic-settings>=2.10.1",
     "python-telegram-bot[all]>=22.3",
     "sqlalchemy>=2.0.43",
@@ -49,6 +50,7 @@ dev = [
     "pytest-html>=4.1.1",
     "pytest-mock>=3.14.1",
     "pytest-asyncio>=1.1.0",
+    "pytest-env>=1.1.5",
 ]
 
 [tool.ruff]
@@ -95,15 +97,16 @@ lint.ignore = [
     "ANN003",  # **kwargs
     "B008", # unused variable
     "TRY003",  # try-except optimizations
+    "TRY400",  # try-except block with multiple exceptions
 ]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["D", "ANN"]
+"tests/*" = ["D", "ANN","T201"]
 "scripts/*" = ["D100"]
-"__init__.py" = ["D104"]
+"__init__.py" = ["ALL"]
 "_version.py" = ["D", "ANN", "E", "W", "F", "I", "UP", "B"]
 "alembic/*.py" = ["ALL"]
 
@@ -150,6 +153,7 @@ reportMissingModuleSource = "none"
 reportUnnecessaryTypeIgnoreComment = "information"
 
 [tool.coverage.run]
+
 source = ["app"]
 data_file = ".reports/coverage/.coverage"
 omit = [
@@ -164,6 +168,10 @@ omit = [
     "*/signature_bootstrap.py",
     "app/__init__.py",
     "app/_version.py",
+    "app/scripts/*",
+    "app/lifespan.py",
+    "app/custom/guard/*",
+    "app/custom/mlogging/*"
 ]
 
 [tool.coverage.report]
@@ -176,6 +184,7 @@ exclude_lines = [
 show_missing = true
 skip_covered = false
 skip_empty = true
+fail_under = 80
 
 [tool.coverage.html]
 directory = ".reports/coverage/html"
@@ -188,11 +197,12 @@ testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-pythonpath = ["app"]
+pythonpath = ["app","tests"]
 addopts = [
+    "--import-mode=importlib",
     "-v",
     "--strict-markers",
-    "--tb=short",
+    "--tb=auto",
     "--no-header",
     "--disable-warnings",
     "--cov=app",
@@ -200,11 +210,13 @@ addopts = [
     "--cov-report=term-missing:skip-covered",
     "--html=.reports/tests/report.html",
     "--self-contained-html",
+    "--capture=no",
+    "--color=yes",
 ]
 asyncio_mode = "auto"
-
+env_files = [".env.test"]
 log_cli = true
-log_cli_level = "DEBUG"
+log_cli_level = "WARNING"
 log_cli_format = "%(asctime)s [%(levelname)8s] %(name)s: %(message)s"
 markers = [
     "slow: mark test as slow to run",
@@ -217,6 +229,8 @@ markers = [
     "api: mark test as API test",
     "database: mark test as database-related",
     "e2e: mark end to end testing",
+    "digipos: mark test as digipos-related",
+    "negative: mark test as negative test",
 ]
 filterwarnings = [
     "ignore::DeprecationWarning",
@@ -235,3 +249,18 @@ norecursedirs = [
     ".pytest_cache",
     ".reports",
 ]
+
+
+[tool.alembic]
+
+script_location = "%(here)s/alembic"
+
+prepend_sys_path = [
+    "."
+]
+[[tool.alembic.post_write_hooks]]
+# lint with attempts to fix using "ruff" - use the module runner, against the "ruff" module
+name = "ruff"
+type = "module"
+module = "ruff"
+options = "check --fix REVISION_SCRIPT_FILENAME"
